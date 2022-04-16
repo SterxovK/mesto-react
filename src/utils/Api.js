@@ -11,17 +11,12 @@ class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-        //  throw "Ошибка запроса";
       })
       .then((obj) => {
-        console.log(obj);
+        //console.log(obj);
         return obj;
       });
 
-    // .catch((err) => {
-    //   console.error(err);
-    //   throw err;
-    // });
   }
   getUserInfo() {
     const promise = fetch(`${this._url}users/me`, {
