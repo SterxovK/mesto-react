@@ -1,61 +1,43 @@
 import React from "react";
-import api from "../utils/Api";
+//import api from "../utils/Api";
 import Card from "../components/Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main(props) {
-
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((promis) => {
-        setUserName(promis.name);
-        setUserDescription(promis.about);
-        setUserAvatar(promis.avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+  cards,
+  onCardLike,
+  onCardDelete,
+}) {
+  const currentUser = React.useContext(CurrentUserContext);
+  
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__block">
-          <img className="profile__avatar" src={userAvatar} alt="#" />
+          <img className="profile__avatar" src={currentUser.avatar} alt="#" />
           <button
             className="profile__avatar-edit-button"
-            onClick={props.onEditAvatar}
+            onClick={onEditAvatar}
           />
         </div>
+
         <div className="profile-intro">
-          <h1 className="profile-intro__title">{userName}</h1>
+          <h1 className="profile-intro__title">{currentUser.name}</h1>
           <button
             type="button"
             className="profile-intro__edit-button button-hover"
-            onClick={props.onEditProfile}
+            onClick={onEditProfile}
           />
-          <p className="profile-intro__sabtitle">{userDescription}</p>
+          <p className="profile-intro__sabtitle">{currentUser.about}</p>
         </div>
         <button
           type="button"
           className="profile__add-button button-hover"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         />
       </section>
 
@@ -66,7 +48,9 @@ function Main(props) {
               <Card
                 key={card._id}
                 card={card}
-                onCardClick={props.onCardClick}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
               />
             );
           })}

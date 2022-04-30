@@ -1,6 +1,6 @@
 import { apiSettings } from "./utils.js";
 class Api {
-  constructor({url, headers}) {
+  constructor({ url, headers }) {
     this._url = url;
     this._headers = headers;
   }
@@ -16,7 +16,6 @@ class Api {
         //console.log(obj);
         return obj;
       });
-
   }
   getUserInfo() {
     const promise = fetch(`${this._url}users/me`, {
@@ -67,8 +66,8 @@ class Api {
     return this._makeRequest(promise);
   }
 
-  deleteCard(data) {
-    const promise = fetch(`${this._url}cards/${data._id}`, {
+  deleteCard(cardId) {
+    const promise = fetch(`${this._url}cards/${cardId}`, {
       method: "DELETE",
       headers: {
         authorization: this._headers,
@@ -76,8 +75,8 @@ class Api {
     });
     return this._makeRequest(promise);
   }
-  setLikes(data) {
-    const promise = fetch(`${this._url}cards/${data._id}/likes`, {
+  setLikes(cardId) {
+    const promise = fetch(`${this._url}cards/${cardId}/likes`, {
       method: "PUT",
       headers: {
         authorization: this._headers,
@@ -85,8 +84,8 @@ class Api {
     });
     return this._makeRequest(promise);
   }
-  deleteLikes(data) {
-    const promise = fetch(`${this._url}cards/${data._id}/likes`, {
+  deleteLikes(cardId) {
+    const promise = fetch(`${this._url}cards/${cardId}/likes`, {
       method: "DELETE",
       headers: {
         authorization: this._headers,
@@ -112,6 +111,9 @@ class Api {
   getInitialData() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
+
+  
+  
 }
 
 const api = new Api(apiSettings);
