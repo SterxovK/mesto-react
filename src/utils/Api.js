@@ -111,9 +111,6 @@ class Api {
   getInitialData() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
-
-  
-  
 }
 
 const api = new Api(apiSettings);

@@ -13,7 +13,7 @@ function Main({
   onCardDelete,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  
+
   return (
     <main className="content">
       <section className="profile">
@@ -24,21 +24,23 @@ function Main({
             onClick={onEditAvatar}
           />
         </div>
+        <div className="profile__container">
+          <div className="profile-intro">
+            <h1 className="profile-intro__title">{currentUser.name}</h1>
+            <button
+              type="button"
+              className="profile-intro__edit-button button-hover"
+              onClick={onEditProfile}
+            />
+            <p className="profile-intro__sabtitle">{currentUser.about}</p>
+          </div>
 
-        <div className="profile-intro">
-          <h1 className="profile-intro__title">{currentUser.name}</h1>
           <button
             type="button"
-            className="profile-intro__edit-button button-hover"
-            onClick={onEditProfile}
+            className="profile__add-button button-hover"
+            onClick={onAddPlace}
           />
-          <p className="profile-intro__sabtitle">{currentUser.about}</p>
         </div>
-        <button
-          type="button"
-          className="profile__add-button button-hover"
-          onClick={onAddPlace}
-        />
       </section>
 
       <section className="cards">

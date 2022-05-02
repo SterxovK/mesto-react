@@ -11,34 +11,20 @@ import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [cards, setCards] = React.useState([]);
-  const [submitTextProfilePopup, setSubmitTextProfilePopup] =
-    React.useState("Сохранить");
-    const [submitTextAddPlacesPopup, setSubmitTextAddPlacesPopup] =
-      React.useState("Сохранить");
+  const [submitTextProfilePopup, setSubmitTextProfilePopup] = React.useState("Сохранить");
+  const [submitTextAddPlacesPopup, setSubmitTextAddPlacesPopup] = React.useState("Сохранить");
 
   React.useEffect(() => {
     api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((promis) => {
+      .getInitialData()
+      .then(([promis, cards]) => {
         setCurrentUser(promis);
+        setCards(cards);
       })
       .catch((err) => {
         console.log(err);
@@ -116,7 +102,7 @@ function App() {
   }
 
   async function handleAddPlaceSubmit(data) {
-    setSubmitTextAddPlacesPopup('уже почти...');
+    setSubmitTextAddPlacesPopup("уже почти...");
     const newCard = await api.setNewCards(data);
     try {
       setCards([newCard, ...cards]);
